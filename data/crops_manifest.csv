@@ -1,0 +1,5 @@
+source_id,relative_path,file_size_bytes,notes
+crop_001,"data/crops/menu_005_chicken_rice.png",1178991,"Manual crop for chicken rice evidence"
+crop_002,"data/crops/menu_005_roasted_lotus_root.png",1846153,"Manual crop for roasted lotus root evidence"
+crop_003,"data/crops/menu_006_anchor_beer.png",861828,"Manual crop for Anchor beer evidence"
+crop_004,"data/crops/menu_007_rainbow_identity.png",1583501,"Manual crop for Rainbow identity evidence"
