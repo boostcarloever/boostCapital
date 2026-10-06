@@ -1,0 +1,4 @@
+node_modules/
+dist/
+# Default local workspace used by `npm run dev`; holds personal writing.
+workspace/
