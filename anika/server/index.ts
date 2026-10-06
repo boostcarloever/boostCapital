@@ -12,6 +12,8 @@ import { Repo } from "./repo";
 import { Service } from "./service";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
+const envFile = path.resolve(here, "..", ".env");
+if (existsSync(envFile)) process.loadEnvFile(envFile);
 const PORT = Number(process.env.ANIKA_PORT ?? 4317);
 const ROOT = process.env.ANIKA_WORKSPACE ?? path.resolve(here, "..", "workspace");
 

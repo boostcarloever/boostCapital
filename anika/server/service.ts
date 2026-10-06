@@ -229,7 +229,11 @@ export class Service {
     const added = proposal.changes.flatMap((c) => (c.op === "add" ? [c.rule.id] : []));
     if (proposal.decisionId) {
       const d = this.repo.decisions.get(proposal.decisionId);
-      if (d) await this.repo.saveDecision({ ...d, resultingRuleIds: [...d.resultingRuleIds, ...added] });
+      /* The approved rule's scope becomes the decision's approved scope, so the
+         before/after pair itself enters matching context, not only the rule. */
+      const addedRule = proposal.changes.find((c) => c.op === "add");
+      const scope = addedRule?.op === "add" ? (addedRule.rule.scope.kind === "core" ? "core" : "mode") : d?.approvedScope ?? null;
+      if (d) await this.repo.saveDecision({ ...d, approvedScope: d.kind === "correction" ? scope : d.approvedScope, resultingRuleIds: [...d.resultingRuleIds, ...added] });
       /* A memory update schedules a candidate regression case; its gold label waits for the writer. */
       for (const ruleId of added) {
         await this.repo.saveRegressionCase({ id: newId("case"), ruleId, before: d?.before ?? "", after: d?.after ?? null, feedback: proposal.rawFeedback ?? "", gold: "pending_human_approval" });

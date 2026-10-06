@@ -91,9 +91,12 @@ describe("learning loop", () => {
     const after = service.compile(project.id);
     expect(after.manifest.active_rule_ids).toHaveLength(1);
     expect(after.manifest.persona_revision).toBe("rev_003");
+    expect(after.manifest.decision_ids).toEqual([result.decision.id]);
 
     const emailProject = await service.createProject({ personaId, modeId: email, title: "Email" });
-    expect(service.compile(emailProject.id).manifest.active_rule_ids).toEqual([]);
+    const emailCtx = service.compile(emailProject.id).manifest;
+    expect(emailCtx.active_rule_ids).toEqual([]);
+    expect(emailCtx.decision_ids).toEqual([]);
   });
 
   it("a stale approval is a VERSION_CONFLICT", async () => {
